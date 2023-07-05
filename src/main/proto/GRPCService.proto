@@ -1,0 +1,30 @@
+syntax = "proto3";
+package com.example.grpc;
+
+message RobotRequest {
+    int32 id = 1;
+    int32 listenPort = 2;
+    string robotAddress = 3;
+    int32 district = 4;
+    int32 x = 5;
+    int32 y = 6;
+}
+
+message BrokenRequest {
+    RobotRequest robot = 1;
+    int64 timestamp = 2;
+}
+
+message Response {
+    string stringResponse = 1;
+}
+
+message message {}
+
+service GRPCService {
+    rpc addRobot(RobotRequest) returns (stream Response);
+    rpc removeRobot(RobotRequest) returns (stream Response);
+    rpc heartbeat(message) returns (stream message);
+    rpc mechanic(BrokenRequest) returns (stream Response);
+    rpc fixed(RobotRequest) returns (stream Response);
+}
